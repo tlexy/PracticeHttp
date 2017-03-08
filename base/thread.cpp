@@ -32,7 +32,7 @@ void* Thread::run(void* arg)
 
 void Thread::run_do()
 {
-	_tid == CurrentThread::tid();
+	_tid = CurrentThread::tid();
 	_func();
 }
 
