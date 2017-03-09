@@ -1,0 +1,1 @@
+/usr/bin/c++    -O0 -Wall -g -ggdb    CMakeFiles/client.dir/client.cpp.o CMakeFiles/client.dir/socket.cpp.o CMakeFiles/client.dir/socket_util.cpp.o CMakeFiles/client.dir/ip_address.cpp.o  -o client -rdynamic 

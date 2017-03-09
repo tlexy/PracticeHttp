@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/linxing/concurrency/net/test_base/ip_address.cpp
+ip_address.h
+/home/linxing/concurrency/net/test_base/ip_address.h
+boost/lexical_cast.hpp
+-
+
+/home/linxing/concurrency/net/test_base/ip_address.h
+sys/types.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+string
+-
+
+/home/linxing/concurrency/net/test_base/test_ip.cpp
+iostream
+-
+ip_address.h
+/home/linxing/concurrency/net/test_base/ip_address.h
+

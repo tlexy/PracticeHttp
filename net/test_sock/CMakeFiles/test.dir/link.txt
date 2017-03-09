@@ -1,0 +1,1 @@
+/usr/bin/c++    -O0 -Wall -g -ggdb    CMakeFiles/test.dir/test.cpp.o CMakeFiles/test.dir/socket.cpp.o CMakeFiles/test.dir/socket_util.cpp.o CMakeFiles/test.dir/ip_address.cpp.o CMakeFiles/test.dir/thread.cpp.o  -o test -rdynamic -lpthread 
