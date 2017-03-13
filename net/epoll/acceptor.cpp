@@ -1,9 +1,10 @@
 #include "acceptor.h"
 
-Acceptor::Acceptor(int port, bool flag, uint64_t ipv4)
-	:_sock(Socket(-1, flag))
+Acceptor::Acceptor(unsigned short int port, bool flag, uint64_t ipv4)
 {
-	_sock.setIp();
+	_ipaddr.setIp();
+	_ipaddr.setPort(port);
+	_sock.bindAddress(_ipaddr);
 	_sock.setReuseAddr(true);
 }
 
@@ -14,6 +15,6 @@ void Acceptor::listen(int max)
 
 void Acceptor::accept(IpAddress& ipaddr)
 {
-	bzero(&ipaddr, sizeof(ipaddr);
+	//bzero(&ipaddr, sizeof(ipaddr);
 	_sock.accept(ipaddr);
 }
