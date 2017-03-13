@@ -100,7 +100,7 @@ namespace SocketUtil
 
 	int Accept(int sockfd, IpAddress& ipaddr, bool flag)
 	{
-		socklen_t len;
+		socklen_t len = ipaddr.addressLength();
 		int connfd = accept(sockfd, ipaddr.rawAddressPtr(), &len);
 		if (connfd < 0)
 		{
