@@ -17,7 +17,7 @@ public:
 	void start();
 	//only valid after thread start.
 	pid_t tid() { return _tid; }
-	bool isMainThread() {return _ttid == MAIN_THREAD_TTID;}
+	//bool isMainThread() {return _ttid == MAIN_THREAD_TTID;}
 private:
 	static void* run(void* arg);
 	void run_do();
@@ -25,8 +25,8 @@ private:
 	pthread_t _pid;
 	pid_t _tid;
 	ThreadFunc _func;
-	int _ttid;
-	static int _numOfThread;
+	//int _ttid;
+	//static int _numOfThread;
 };
 
 #endif

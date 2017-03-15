@@ -54,6 +54,12 @@ public:
 			_queue.pop_front();
 		}
 	}
+
+	size_t size()
+	{
+		MutexGuard lock(_mutex);
+		return _queue.size();
+	}
 private:
 	Mutex _mutex;
 	Condition _cond;

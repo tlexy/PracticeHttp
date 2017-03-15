@@ -1,6 +1,8 @@
 #ifndef CURRENT_THREAD_H
 #define CURRENT_THREAD_H
 
+//#include <unistd.h>
+
 namespace CurrentThread
 {
 	extern __thread int _cacheTid;
@@ -15,6 +17,8 @@ namespace CurrentThread
 		}
 		return _cacheTid;
 	}
+
+	void sleep(int second);
 }
 
 #endif

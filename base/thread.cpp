@@ -1,5 +1,6 @@
 #include "thread.h"
 #include "current_thread.h"
+#include <unistd.h>
 
 namespace CurrentThread
 {
@@ -12,15 +13,20 @@ namespace CurrentThread
 			_cacheTid = static_cast<pid_t>(::syscall(SYS_gettid));
 		}
 	}
+
+	void sleep(int second)
+	{
+		::sleep(second);
+	}
 }
 
-int Thread::_numOfThread = 0;
+//int Thread::_numOfThread = 0;
 
 Thread::Thread(const ThreadFunc& func)
-	: _func(func),
-	_ttid(_numOfThread)
+	: _func(func)
+	//_ttid(_numOfThread)
 {	
-	++_numOfThread;
+	//++_numOfThread;
 }
 
 void* Thread::run(void* arg)
