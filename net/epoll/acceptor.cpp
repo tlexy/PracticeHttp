@@ -13,8 +13,8 @@ void Acceptor::listen(int max)
 	_sock.listen(max);
 }
 
-void Acceptor::accept(IpAddress& ipaddr)
+int Acceptor::accept(IpAddress& ipaddr)
 {
 	//bzero(&ipaddr, sizeof(ipaddr);
-	_sock.accept(ipaddr);
+	return _sock.accept(ipaddr);
 }

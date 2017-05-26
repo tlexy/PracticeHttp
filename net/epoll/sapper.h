@@ -13,11 +13,20 @@ class Sapper;
 typedef boost::shared_ptr<EventLoop> EventLoopPtr;
 //typedef boost::shared_ptr<Sapper> SapperPtr;
 
+namespace SAPPER
+{
+	enum res_code
+	{
+		OK = 0,
+		OVER = 1,
+	};
+}
+
 class Sapper 
 	: public boost::enable_shared_from_this<Sapper>
 {
 public:
-	typedef boost::function<void()> CallBackHandler;
+	typedef boost::function<int()> CallBackHandler;
 	Sapper(int sockfd, EventLoopPtr);
 	int focusEvents() { return _in_events; }
 	int revents() { return _out_events; }
@@ -26,7 +35,7 @@ public:
 	void setREvent(int events);
 	void setReadHandler(const CallBackHandler& cb) { _readCallback = cb; }
 	void setWriteHandler(const CallBackHandler& cb) { _writeCallback = cb; }
-	void handleEvent(const TimeEpoch&);
+	int handleEvent(const TimeEpoch&);
 	int fd() { return _fd; }
 	EventLoopPtr loopPtr() { return _loop; }
 private:

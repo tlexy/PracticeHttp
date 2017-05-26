@@ -41,7 +41,11 @@ void EventLoop::loop()
 		
 		for (int i = 0; i < _activeSapper.size(); ++i)
 		{
-			_activeSapper[i]->handleEvent(time);
+			int res = _activeSapper[i]->handleEvent(time);
+			if (res == SAPPER::OVER)
+			{
+				removeSapper(_activeSapper[i]);
+			}
 		}
 		std::vector<Functor> functors;
 		{

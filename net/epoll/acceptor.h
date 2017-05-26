@@ -9,7 +9,7 @@ class Acceptor
 public:
 	Acceptor(unsigned short int port, bool nonblock = true, uint64_t ipv4 = INADDR_ANY);
 	void listen(int max);
-	void accept(IpAddress&);
+	int accept(IpAddress&);
 	int fd() { return _sock.fd(); }
 private:
 	Socket _sock;

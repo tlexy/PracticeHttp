@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/linxing/projects/http_server/net/epoll/ip_address.cpp
+ip_address.h
+/home/linxing/projects/http_server/net/epoll/ip_address.h
+boost/lexical_cast.hpp
+-
+stdlib.h
+-
+string.h
+-
+
+/home/linxing/projects/http_server/net/epoll/ip_address.h
+sys/types.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+string
+-
+

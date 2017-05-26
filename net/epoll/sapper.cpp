@@ -31,16 +31,17 @@ void Sapper::focusWrite()
 	update();
 }
 
-void Sapper::handleEvent(const TimeEpoch& time)
+int Sapper::handleEvent(const TimeEpoch& time)
 {
 	if ((_out_events & _read_event) && _readCallback)
 	{
-		_readCallback();
+		return _readCallback();
 	}
 	if ((_in_events & _write_event) && _writeCallback)
 	{
-		_writeCallback();
+		return _writeCallback();
 	}
+	return 0;
 }
 
 void Sapper::update()

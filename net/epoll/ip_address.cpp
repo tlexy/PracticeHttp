@@ -2,11 +2,14 @@
 #include <boost/lexical_cast.hpp>
 #include <stdlib.h>
 #include <string.h>
+//#include <iostream>
 
 #define IPV4_LEN 16
 
 IpAddress::IpAddress(int family, unsigned short port)
-{	
+{
+	//std::cout << "family:" << family << std::endl;
+	bzero(&_addr, sizeof(_addr));
 	_addr.addr_ip4.sin_family = family;
 	_addr.addr_ip4.sin_port = htons(port);
 }
