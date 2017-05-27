@@ -45,6 +45,7 @@ void EventLoop::loop()
 			if (res == SAPPER::OVER)
 			{
 				removeSapper(_activeSapper[i]);
+				SocketUtil::Close(_activeSapper[i]->fd());
 			}
 		}
 		std::vector<Functor> functors;
