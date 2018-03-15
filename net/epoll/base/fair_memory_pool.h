@@ -1,0 +1,59 @@
+﻿#pragma once
+
+#include <boost/enable_shared_from_this.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
+#include <list>
+#include <vector>
+#include "base.h"
+#include <iostream>
+
+namespace timic
+{
+
+	class FailMemoryPoolBlock;
+	SHAREDPTR(FailMemoryPoolBlock, FailMemoryPoolBlockPtr);
+
+	//内存块
+	class FailMemoryPoolBlock : public boost::noncopyable
+	{
+	public:
+		FailMemoryPoolBlock(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit);
+
+		void* alloc();
+		void recycle(void* ptr);
+		bool is_belong(void* ptr);
+		bool is_full();//是否还有空闲的空间可分配
+
+		~FailMemoryPoolBlock();
+
+	private:
+		TYPE::uint64 _pool_size;
+		TYPE::uint64 _alloc_unit;
+		std::list<void*> _in_use_list;
+		std::list<void*> _empty_list;
+		//
+		TYPE::uint64 start;
+		TYPE::uint64 end;
+		TYPE::uint64 ptr;//当前指向的位置
+
+	private:
+		bool is_enough();//是否还有新的空间可分配
+
+	};
+
+	//内存池
+	class FairMemoryPool : public boost::noncopyable
+	{
+	public:
+		FairMemoryPool(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit);
+		void* alloc();
+		void recycle(void* ptr);
+	private:
+		std::list<FailMemoryPoolBlockPtr> _blocks;
+		TYPE::uint64 _pool_size;
+		TYPE::uint64 _alloc_unit;
+	};
+
+}
+
