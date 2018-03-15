@@ -12,13 +12,14 @@
 #define TIMER_DEFAULT_INTERNAL 20
 #define TIMER_INFINITE_INTERNAL -1
 
-TimerEventLoop::TimerEventLoop()
+TimerEventLoop::TimerEventLoop(const Socket& socket)
 	:_wakeup_fd(eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK)),
 	_quit(true),
 	_looping(false),
 	_poller(Creator<EPoller>::Create()),
 	_is_init(false),
-	_timeout(-1)
+	_timeout(TIMER_INFINITE_INTERNAL),
+	_socket(socket)
 {
 	//init();
 }
