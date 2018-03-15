@@ -20,14 +20,27 @@ namespace Elixir{
 		return ins;
 	}
 
-	TimerIdentityPtr TimerMgr::add_timer(TimerFunctor func, uint64_t tick)
+	TimerIdentityPtr TimerMgr::add_timer(const TimerFunctor& func, uint64_t tick)
+	{
+		TimerList* timer;
+		impl_add_timer(timer, func, tick);
+		return TimerIdentityPtr(new TimerIdentity(this, timer->id, timer->tick_time));
+	}
+
+	void TimerMgr::run_at(const TimerFunctor& func, uint64_t tick)
+	{
+		TimerList* timer;
+		impl_add_timer(timer, func, tick);
+	}
+
+	void TimerMgr::impl_add_timer(TimerList*& timer, const TimerFunctor& func, uint64_t tick)
 	{
 		void* ptr = _mem_pool_ptr->alloc();
 		if (!ptr)
 		{
 			assert(1 == 2);
 		}
-		TimerList* timer = (TimerList*)ptr;
+		timer = (TimerList*)ptr;
 		timer->id = get_identity();
 		timer->tick_time = tick;
 		timer->functor = func;
@@ -42,7 +55,6 @@ namespace Elixir{
 		{
 			add_to_list(_timers[tick], timer);
 		}
-		return TimerIdentityPtr(new TimerIdentity(this, timer->id, timer->tick_time));
 	}
 
 	uint64_t TimerMgr::get_next_tick_time()

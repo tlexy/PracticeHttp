@@ -11,9 +11,8 @@
 
 #define timer_mgr (*timic::TimerMgr::get_instance())
 
-namespace timic
+namespace Elixir
 {
-	typedef boost::function<void()> TimerFunctor;
 
 	class TimerIdentity;
 	SHAREDPTR(TimerIdentity, TimerIdentityPtr);
@@ -30,7 +29,7 @@ namespace timic
 		typedef struct _timer_list
 		{
 		public:
-			_timer_list() : next(nullptr){}
+			_timer_list() : next(nullptr),internal(0){}
 			int64_t id;//唯一标识符
 			uint64_t tick_time;//触发时间
 			TimerFunctor functor;
@@ -40,24 +39,27 @@ namespace timic
 	public:
 		static TimerMgr* get_instance();
 
-		TimerIdentityPtr add_timer(TimerFunctor, int64_t);//添加定时器动作。参数为要执行的函数及动作
+		TimerIdentityPtr add_timer(const TimerFunctor&, uint64_t tick_time);//添加定时器动作。参数为要执行的函数及动作
+		//same as add_timer, but with no return value.
+		void run_at(const TimerFunctor&, uint64_t tick_time);
 		void del_timer(TimerIdentityPtr);
-		void exec_timer(int64_t now);
+		void exec_timer(uint64_t now);
 
 		uint64_t get_next_tick_time();//获得下一次触发时间，最小为10ms，为0时说明定时器列表为空
 		int64_t get_identity();//分配定时器唯一标识符
 
 		~TimerMgr();
 
-	private:
+	private
 		static TYPE::uint64 _id;
-		std::map<int64_t, TimerList*> _timers;
+		std::map<uint64_t, TimerList*> _timers;
 		FairMemoryPool* _mem_pool_ptr;
 
 	private:
 		TimerMgr();
 		void add_to_list(TimerList* header, TimerList* unit);
 		void do_functor_list(TimerList* header);
+		void impl_add_timer(TimerList*&, const TimerFunctor&, uint64_t tick);
 		
 	};
 

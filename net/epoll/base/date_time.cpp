@@ -1,12 +1,12 @@
 #include "date_time.h"
 #include <boost/lexical_cast.hpp>
 
-int64_t TimeEpoch::MsPerDay = 24*60*60*1000000;
-int64_t TimeEpoch::MsPerHour = 60*60*1000000;
-int64_t TimeEpoch::MsPerMinute = 60*1000000;
-int64_t TimeEpoch::MsPerSecond = 1000000;
+uint32_t TimeEpoch::MsPerDay = 24*60*60*1000000;
+uint32_t TimeEpoch::MsPerHour = 60*60*1000000;
+uint32_t TimeEpoch::MsPerMinute = 60*1000000;
+uint32_t TimeEpoch::MsPerSecond = 1000000;
 
-TimeEpoch::TimeEpoch(int64_t micro)
+TimeEpoch::TimeEpoch(uint64_t micro)
 	:_ms(micro)
 {
 }
@@ -18,22 +18,22 @@ TimeEpoch TimeEpoch::now()
 	return TimeEpoch(MsPerSecond * tv.tv_sec + tv.tv_usec);
 }
 
-int64_t TimeEpoch::second()
+uint64_t TimeEpoch::second()
 {
 	return _ms / MsPerSecond;
 }
 
-int64_t TimeEpoch::fraction()
+uint64_t TimeEpoch::fraction()
 {
 	return _ms % MsPerSecond;
 }
 
-void TimeEpoch::addTime(int64_t micro)
+void TimeEpoch::addTime(uint64_t micro)
 {
 	_ms += micro;
 }
 
-int64_t TimeEpoch::toInt()
+uint64_t TimeEpoch::toInt()
 {
 	return _ms;
 }

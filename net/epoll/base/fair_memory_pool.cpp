@@ -1,8 +1,7 @@
 ﻿#include "fair_memory_pool.h"
 #include <stdlib.h>
 
-namespace timic
-{
+namespace Elixir{
 
 	FailMemoryPoolBlock::FailMemoryPoolBlock(uint64_t pool_size, uint32_t alloc_unit)
 		:_pool_size(pool_size),

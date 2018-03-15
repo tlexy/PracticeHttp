@@ -12,11 +12,29 @@ Socket sock(-1);
 
 EventLoopPtr event_loop = Creator<EventLoop>::Create();
 
+void read_data()
+{
+	/*read until end of data,if data is enough,then
+	send the data to the MQ.
+	but if connection is over or reset? how to deal with it?
+	*/
+}
+
+void write_data()
+{}
+
 void read()
 {
 	IpAddress ipaddr;
 	bzero(&ipaddr, sizeof(ipaddr));
-	sock.accept(ipaddr);
+	int	nfd = sock.accept(ipaddr);
+	SapperPtr sapper = Creator<Sapper>::Create(nfd, event_loop);
+	sapper->focusRead();
+	sapper->focusWrite();
+	Sapper::CallBackHandler cbr = boost::bind(read_data);
+	Sapper::CallBackHandler cbw = boost::bind(write_data);
+	sapper->setReadHandler(cbr);
+	sapper->setWriteHandler(cbw);
 	std::cout << "connect from:" << ipaddr.toString() << std::endl;
 }
 
@@ -35,7 +53,6 @@ void loop()
 	event_loop->init();
 	event_loop->loop();
 }
-
 
 int main()
 {

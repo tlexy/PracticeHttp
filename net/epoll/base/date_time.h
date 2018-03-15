@@ -12,22 +12,23 @@
 class TimeEpoch : public boost::less_than_comparable<TimeEpoch>
 {
 public:
-	TimeEpoch(int64_t micro_second = 0);
+	TimeEpoch(uint64_t micro_second = 0);
 	static TimeEpoch now();
-	void addTime(int64_t micro_second);
-	int64_t second();
-	int64_t fraction(); //number after second
-	int64_t toInt();
+	void addTime(uint64_t micro_second);
+	uint64_t second();
+	uint64_t fraction(); //number after second
+	uint64_t toInt();
 	struct tm toTM();
 	void toTM(struct tm *tm); //thread safe
 	std::string toStandardString(bool withMS = false);
-public:
-	static int64_t MsPerDay;
-	static int64_t MsPerHour;
-	static int64_t MsPerMinute;
-	static int64_t MsPerSecond;
 private:
-	int64_t _ms; //micro second
+	uint64_t _ms; //micro second
+public:
+	static uint32_t MsPerDay;
+	static uint32_t MsPerHour;
+	static uint32_t MsPerMinute;
+	static uint32_t MsPerSecond;
+
 };
 
 inline bool operator<(TimeEpoch lhs, TimeEpoch rhs)

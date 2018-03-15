@@ -12,6 +12,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/bind.hpp>
 #include "../common.h"
+#include "base/timer_mgr.h"
 
 namespace Elixir{
 
@@ -29,6 +30,8 @@ public:
 	void runAfterWake(const Functor&);
 	void breakAndRun(const Functor&);
 	void loop();
+	void runAfter(const TimerFunctor&, uint64_t millisecond);
+	void runAt(const TimerFunctor&, uint64_t millisecond);
 
 protected:
 	void init();//Add event fd for wake up.
@@ -45,6 +48,7 @@ private:
 	int _wakeup_fd;
 	uint64_t _wakeup_read;
 	SapperList _activeSapper;
+	bool _is_init;
 };
 
 }
