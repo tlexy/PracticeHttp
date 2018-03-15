@@ -5,11 +5,10 @@
 #include <boost/noncopyable.hpp>
 #include <list>
 #include <vector>
-#include "base.h"
+#include "../../common.h"
 #include <iostream>
 
-namespace timic
-{
+namespace Elixir{
 
 	class FailMemoryPoolBlock;
 	SHAREDPTR(FailMemoryPoolBlock, FailMemoryPoolBlockPtr);
@@ -18,7 +17,7 @@ namespace timic
 	class FailMemoryPoolBlock : public boost::noncopyable
 	{
 	public:
-		FailMemoryPoolBlock(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit);
+		FailMemoryPoolBlock(uint64_t pool_size, int32_t alloc_unit);
 
 		void* alloc();
 		void recycle(void* ptr);
@@ -28,14 +27,14 @@ namespace timic
 		~FailMemoryPoolBlock();
 
 	private:
-		TYPE::uint64 _pool_size;
-		TYPE::uint64 _alloc_unit;
+		uint64_t _pool_size;
+		uint32_t _alloc_unit;
 		std::list<void*> _in_use_list;
 		std::list<void*> _empty_list;
 		//
-		TYPE::uint64 start;
-		TYPE::uint64 end;
-		TYPE::uint64 ptr;//当前指向的位置
+		uint64_t start;
+		uint32_t end;
+		uint64_t ptr;//当前指向的位置
 
 	private:
 		bool is_enough();//是否还有新的空间可分配

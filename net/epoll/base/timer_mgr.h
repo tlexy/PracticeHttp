@@ -1,10 +1,8 @@
 ﻿#pragma once
 
-#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include "base.h"
+#include "../../common.h"
 #include <map>
 #include <unordered_map>
 #include <boost/enable_shared_from_this.hpp>
@@ -33,8 +31,8 @@ namespace timic
 		{
 		public:
 			_timer_list() : next(nullptr){}
-			TYPE::uint64 id;//唯一标识符
-			TYPE::uint64 tick_time;//触发时间
+			int64_t id;//唯一标识符
+			uint64_t tick_time;//触发时间
 			TimerFunctor functor;
 			struct _timer_list* next;
 		}TimerList;
@@ -42,18 +40,18 @@ namespace timic
 	public:
 		static TimerMgr* get_instance();
 
-		TimerIdentityPtr add_timer(TimerFunctor, TYPE::uint64);//添加定时器动作。参数为要执行的函数及动作
+		TimerIdentityPtr add_timer(TimerFunctor, int64_t);//添加定时器动作。参数为要执行的函数及动作
 		void del_timer(TimerIdentityPtr);
-		void exec_timer(TYPE::uint64 now);
+		void exec_timer(int64_t now);
 
-		TYPE::uint64 get_next_tick_time();//获得下一次触发时间，最小为10ms，为0时说明定时器列表为空
-		TYPE::uint64 get_identity();//分配定时器唯一标识符
+		uint64_t get_next_tick_time();//获得下一次触发时间，最小为10ms，为0时说明定时器列表为空
+		int64_t get_identity();//分配定时器唯一标识符
 
 		~TimerMgr();
 
 	private:
 		static TYPE::uint64 _id;
-		std::map<TYPE::uint64, TimerList*> _timers;
+		std::map<int64_t, TimerList*> _timers;
 		FairMemoryPool* _mem_pool_ptr;
 
 	private:
@@ -66,16 +64,16 @@ namespace timic
 	class TimerIdentity : public boost::enable_shared_from_this<TimerIdentity>
 	{
 	public:
-		TimerIdentity(TimerMgr* mgr, TYPE::uint64 id, TYPE::uint64 tick_time);
+		TimerIdentity(TimerMgr* mgr, int64_t id, uint64_t tick_time);
 		void del_timer();
-		TYPE::uint64 get_id();
-		TYPE::uint64 get_tick_time();
-		void set(TYPE::uint64 id, TYPE::uint64 tick_time);
+		int64_t get_id();
+		uint64_t get_tick_time();
+		void set(int64_t id, uint64_t tick_time);
 		~TimerIdentity();
 	private:
 		TimerMgr* _ptr;
-		TYPE::uint64 _id;//定时器的唯一标识符
-		TYPE::uint64 _tick_time;//定时器的触发时间
+		int64_t _id;//定时器的唯一标识符
+		uint64_t _tick_time;//定时器的触发时间
 	};
 
 }

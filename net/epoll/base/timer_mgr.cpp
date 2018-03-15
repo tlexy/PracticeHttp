@@ -1,10 +1,9 @@
 ﻿#include "timer_mgr.h"
 
-namespace timic
-{
+namespace Elixir{
 #define IDENTITY_SIZE sizeof(TimerIdentity)
 
-	TYPE::uint64 TimerMgr::_id = 0;
+	int64_t TimerMgr::_id = 0;
 
 	TimerMgr::TimerMgr()
 		: _mem_pool_ptr(new FairMemoryPool(TIMER_SIZE * 100, TIMER_SIZE))
@@ -21,7 +20,7 @@ namespace timic
 		return ins;
 	}
 
-	TimerIdentityPtr TimerMgr::add_timer(TimerFunctor func, TYPE::uint64 tick)
+	TimerIdentityPtr TimerMgr::add_timer(TimerFunctor func, uint64_t tick)
 	{
 		void* ptr = _mem_pool_ptr->alloc();
 		if (!ptr)
@@ -46,9 +45,9 @@ namespace timic
 		return TimerIdentityPtr(new TimerIdentity(this, timer->id, timer->tick_time));
 	}
 
-	TYPE::uint64 TimerMgr::get_next_tick_time()
+	uint64_t TimerMgr::get_next_tick_time()
 	{
-		std::map<TYPE::uint64, TimerList*>::iterator it = _timers.begin();
+		std::map<uint64_t, TimerList*>::iterator it = _timers.begin();
 		if (it != _timers.end() && it->second != nullptr)
 		{
 			return it->second->tick_time;
@@ -58,7 +57,7 @@ namespace timic
 
 	void TimerMgr::del_timer(TimerIdentityPtr idptr)
 	{
-		std::map<TYPE::uint64, TimerList*>::iterator it = _timers.find(idptr->get_tick_time());
+		std::map<uint64_t, TimerList*>::iterator it = _timers.find(idptr->get_tick_time());
 		if (it == _timers.end())
 		{
 			return;
@@ -85,8 +84,7 @@ namespace timic
 
 	void TimerMgr::exec_timer(TYPE::uint64 now)
 	{
-		std::cout << "exec in " << now << std::endl;
-		std::map<TYPE::uint64, TimerList*>::iterator it = _timers.begin();
+		std::map<int64_t, TimerList*>::iterator it = _timers.begin();
 		for (; it != _timers.end();)
 		{
 			if (it->first > now)
@@ -119,7 +117,7 @@ namespace timic
 		header->next = unit;
 	}
 
-	TYPE::uint64 TimerMgr::get_identity()
+	int64_t TimerMgr::get_identity()
 	{
 		return ++_id;
 	}
@@ -131,7 +129,7 @@ namespace timic
 
 	///
 	///
-	TimerIdentity::TimerIdentity(TimerMgr* mgr, TYPE::uint64 id, TYPE::uint64 tick_time)
+	TimerIdentity::TimerIdentity(TimerMgr* mgr, int64_t id, uint64_t tick_time)
 		: _ptr(mgr),
 		_id(id),
 		_tick_time(tick_time)
@@ -148,7 +146,7 @@ namespace timic
 		//_ptr->del_timer(_id, _tick_time);
 	}
 
-	void TimerIdentity::set(TYPE::uint64 id, TYPE::uint64 tick_time)
+	void TimerIdentity::set(int64_t id, uint64_t tick_time)
 	{
 		_id = id;
 		_tick_time = tick_time;
@@ -167,7 +165,6 @@ namespace timic
 	TimerIdentity::~TimerIdentity()
 	{
 
-		//_pool_unit_ptr->recycle();
 	}
 
 }

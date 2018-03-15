@@ -4,11 +4,11 @@
 namespace timic
 {
 
-	FailMemoryPoolBlock::FailMemoryPoolBlock(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit)
+	FailMemoryPoolBlock::FailMemoryPoolBlock(uint64_t pool_size, uint32_t alloc_unit)
 		:_pool_size(pool_size),
 		_alloc_unit(alloc_unit)
 	{
-		start = (TYPE::uint64)malloc(_pool_size);
+		start = (uint64_t)malloc(_pool_size);
 		memset((void*)start, 0x0, _pool_size);
 		ptr = start;
 		end = start + _pool_size;
@@ -16,7 +16,6 @@ namespace timic
 
 	void* FailMemoryPoolBlock::alloc()
 	{
-		std::cout << "alloc" << std::endl;
 		void* addr;
 		if (_empty_list.size() > 0)
 		{
@@ -63,7 +62,7 @@ namespace timic
 
 	bool FailMemoryPoolBlock::is_belong(void* ptr)
 	{
-		TYPE::uint64 iptr = (TYPE::uint64)ptr;
+		uint64_t iptr = (uint64_t)ptr;
 		return iptr >= start && iptr < end;
 	}
 
