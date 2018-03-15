@@ -33,7 +33,7 @@ namespace Elixir{
 		std::list<void*> _empty_list;
 		//
 		uint64_t start;
-		uint32_t end;
+		uint64_t end;
 		uint64_t ptr;//当前指向的位置
 
 	private:
