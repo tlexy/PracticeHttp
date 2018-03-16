@@ -30,8 +30,8 @@ class Sapper
 public:
 	typedef boost::function<int()> CallBackHandler;
 	Sapper(int sockfd, TimerEventLoopPtr);
-	int focusEvents() { return _in_events; }
-	int revents() { return _out_events; }
+	int focusEvents() { return _in_events | _out_events; }
+	int revents() { return _revents; }
 	void focusRead();
 	void focusWrite();
 	void setREvent(int events);
@@ -43,6 +43,7 @@ public:
 private:
 	int _in_events;
 	int _out_events;
+	int _revents;
 	int _fd;
 	TimerEventLoopPtr _loop;
 	CallBackHandler _readCallback;

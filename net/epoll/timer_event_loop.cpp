@@ -41,16 +41,24 @@ int TimerEventLoop::handle_accept()
 	Sapper::CallBackHandler cbw = boost::bind(&TimerEventLoop::handle_write, this, sapper);
 	sapper->setReadHandler(cbr);
 	sapper->setWriteHandler(cbw);
+	return 0;
 }
 
 int TimerEventLoop::handle_receive(SapperPtr sapper)
 {
 	std::cout << "data arrive, fd is " << sapper->fd() << std::endl;
+	char buff[1024];
+	bzero(&buff, sizeof(buff));
+	SocketUtil::Read(sapper->fd(), (void*)&buff, 1023);
+	std::string str((char*)&buff);
+	std::cout << "data is : " << str << std::endl;
+	return 0;
 }
 
 int TimerEventLoop::handle_write(SapperPtr sapper)
 {
 	std::cout << "data send, fd is " << sapper->fd() << std::endl;
+	return 0;
 }
 
 void TimerEventLoop::init()

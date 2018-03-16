@@ -12,13 +12,15 @@ Sapper::Sapper(int sockfd, TimerEventLoopPtr loop)
 	:_fd(sockfd),
 	_in_events(0),
 	_out_events(0),
+	_revents(0),
 	_loop(loop)
 {
 }
 
 void Sapper::setREvent(int events)
 {
-	_out_events = events;
+	_revents = events;
+	//update();
 }
 
 void Sapper::focusRead()
@@ -29,20 +31,21 @@ void Sapper::focusRead()
 
 void Sapper::focusWrite()
 {
-	_in_events |= _write_event;
+	_out_events |= _write_event;
 	update();
 }
 
 int Sapper::handleEvent(const TimeEpoch& time)
 {
-	if ((_out_events & _read_event) && _readCallback)
+	if ((_in_events & _revents) && _readCallback)
 	{
 		return _readCallback();
 	}
-	if ((_in_events & _write_event) && _writeCallback)
+	if ((_out_events & _revents) && _writeCallback)
 	{
 		return _writeCallback();
 	}
+	_revents = 0;
 	return 0;
 }
 
