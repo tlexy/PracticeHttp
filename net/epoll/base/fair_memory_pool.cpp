@@ -71,7 +71,7 @@ namespace Elixir{
 
 	/////------------------------------------------/////
 
-	FairMemoryPool::FairMemoryPool(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit)
+	FairMemoryPool::FairMemoryPool(uint64_t pool_size, uint32_t alloc_unit)
 		:_pool_size(pool_size),
 		_alloc_unit(alloc_unit)
 	{

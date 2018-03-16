@@ -2,6 +2,8 @@
 #include <sys/eventfd.h>
 #include "sapper.h"
 
+namespace Elixir{
+
 int EPoller::_eventSize = 8;
 
 EPoller::EPoller()
@@ -70,4 +72,4 @@ TimeEpoch EPoller::poll(int timeout, SapperList& activeSapper)
 	return TimeEpoch::now();
 }
 
-
+}

@@ -9,7 +9,7 @@
 #include "fair_memory_pool.h"
 #include <iostream>
 
-#define timer_mgr (*timic::TimerMgr::get_instance())
+#define timer_mgr (*Elixir::TimerMgr::get_instance())
 
 namespace Elixir
 {
@@ -29,7 +29,7 @@ namespace Elixir
 		typedef struct _timer_list
 		{
 		public:
-			_timer_list() : next(nullptr),internal(0){}
+			_timer_list() : next(nullptr){}
 			int64_t id;//唯一标识符
 			uint64_t tick_time;//触发时间
 			TimerFunctor functor;
@@ -50,8 +50,8 @@ namespace Elixir
 
 		~TimerMgr();
 
-	private
-		static TYPE::uint64 _id;
+	private:
+		static int64_t _id;
 		std::map<uint64_t, TimerList*> _timers;
 		FairMemoryPool* _mem_pool_ptr;
 

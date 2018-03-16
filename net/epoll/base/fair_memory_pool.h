@@ -17,7 +17,7 @@ namespace Elixir{
 	class FailMemoryPoolBlock : public boost::noncopyable
 	{
 	public:
-		FailMemoryPoolBlock(uint64_t pool_size, int32_t alloc_unit);
+		FailMemoryPoolBlock(uint64_t pool_size, uint32_t alloc_unit);
 
 		void* alloc();
 		void recycle(void* ptr);
@@ -45,13 +45,13 @@ namespace Elixir{
 	class FairMemoryPool : public boost::noncopyable
 	{
 	public:
-		FairMemoryPool(TYPE::uint64 pool_size, TYPE::uint32 alloc_unit);
+		FairMemoryPool(uint64_t pool_size, uint32_t alloc_unit);
 		void* alloc();
 		void recycle(void* ptr);
 	private:
 		std::list<FailMemoryPoolBlockPtr> _blocks;
-		TYPE::uint64 _pool_size;
-		TYPE::uint64 _alloc_unit;
+		uint64_t _pool_size;
+		uint32_t _alloc_unit;
 	};
 
 }

@@ -1,16 +1,20 @@
-#include "event_loop.h"
+#include "timer_event_loop.h"
 #include <sys/eventfd.h>
 #include "sapper.h"
-#include "epoller.h"
+//#include "epoller.h"
 #include "common.hpp"
 #include "socket_util.h"
 #include <sys/types.h>
-#include <boost/bind.hpp>
-
-//int EventLoop::_timeout = 10000;
+//#include <boost/bind.hpp>
+#include "socket_util.h"
+#include <string>
+#include <string.h>
+#include <iostream>
 
 #define TIMER_DEFAULT_INTERNAL 20
 #define TIMER_INFINITE_INTERNAL -1
+
+namespace Elixir{
 
 TimerEventLoop::TimerEventLoop(const Socket& socket)
 	:_wakeup_fd(eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK)),
@@ -21,16 +25,44 @@ TimerEventLoop::TimerEventLoop(const Socket& socket)
 	_timeout(TIMER_INFINITE_INTERNAL),
 	_socket(socket)
 {
+	//_socket = socket;
 	//init();
+}
+
+int TimerEventLoop::handle_accept()
+{
+	IpAddress ipaddr;
+	bzero(&ipaddr,sizeof(ipaddr));
+	int connfd = _socket.accept(ipaddr);
+	SapperPtr sapper = Creator<Sapper>::Create(connfd, shared_from_this());
+	sapper->focusRead();
+	sapper->focusWrite();
+	Sapper::CallBackHandler cbr = boost::bind(&TimerEventLoop::handle_receive, this, sapper);
+	Sapper::CallBackHandler cbw = boost::bind(&TimerEventLoop::handle_write, this, sapper);
+	sapper->setReadHandler(cbr);
+	sapper->setWriteHandler(cbw);
+}
+
+int TimerEventLoop::handle_receive(SapperPtr sapper)
+{
+	std::cout << "data arrive, fd is " << sapper->fd() << std::endl;
+}
+
+int TimerEventLoop::handle_write(SapperPtr sapper)
+{
+	std::cout << "data send, fd is " << sapper->fd() << std::endl;
 }
 
 void TimerEventLoop::init()
 {
 	SapperPtr sapper = Creator<Sapper>::Create(_wakeup_fd, shared_from_this());
 	sapper->focusRead();
-	//set read handler.
+	sapper->setReadHandler(boost::bind(&SocketUtil::Read, _wakeup_fd, &_wakeup_read, sizeof(_wakeup_read)));
 
-	sapper->setReadHandler(boost::bind(&SocketUtil::Read, _wakeup_fd, &_wake_read, sizeof(_wake_read)));
+	SapperPtr sapptor = Creator<Sapper>::Create(_socket.fd(), shared_from_this());
+	sapptor->focusRead();
+	sapptor->setReadHandler(boost::bind(&TimerEventLoop::handle_accept,this));
+
 
 }
 
@@ -62,7 +94,7 @@ void TimerEventLoop::loop()
 		std::vector<Functor> functors;
 		{
 			MutexGuard lock(_mutex);
-			functors.swap(_pendingFunc);
+			functors.swap(_pendingFuncs);
 		}
 		for (int i = 0; i < functors.size(); ++i)
 		{
@@ -123,12 +155,14 @@ void TimerEventLoop::removeSapper(SapperPtr sapper)
 void TimerEventLoop::runAfterWake(const Functor& func)
 {
 	MutexGuard lock(_mutex);
-	_pendingFunc.push_back(func);
+	_pendingFuncs.push_back(func);
 }
 
 void TimerEventLoop::breakAndRun(const Functor& func)
 {
 	MutexGuard lock(_mutex);
-	_pendingFunc.push_back(func);
+	_pendingFuncs.push_back(func);
 	wakeUp();
+}
+
 }

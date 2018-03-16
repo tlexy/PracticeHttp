@@ -4,9 +4,13 @@
 CMakeFiles/eventloop.dir/base/date_time.cpp.o: ../base/date_time.cpp
 CMakeFiles/eventloop.dir/base/date_time.cpp.o: ../base/date_time.h
 
+CMakeFiles/eventloop.dir/base/fair_memory_pool.cpp.o: ../base/fair_memory_pool.cpp
+
 CMakeFiles/eventloop.dir/base/thread.cpp.o: ../base/current_thread.h
 CMakeFiles/eventloop.dir/base/thread.cpp.o: ../base/thread.cpp
 CMakeFiles/eventloop.dir/base/thread.cpp.o: ../base/thread.h
+
+CMakeFiles/eventloop.dir/base/timer_mgr.cpp.o: ../base/timer_mgr.cpp
 
 CMakeFiles/eventloop.dir/epoller.cpp.o: ../base/date_time.h
 CMakeFiles/eventloop.dir/epoller.cpp.o: ../epoller.cpp
@@ -14,27 +18,21 @@ CMakeFiles/eventloop.dir/epoller.cpp.o: ../epoller.h
 CMakeFiles/eventloop.dir/epoller.cpp.o: ../poller.h
 CMakeFiles/eventloop.dir/epoller.cpp.o: ../sapper.h
 
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../base/date_time.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../base/mutex.hpp
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../common.hpp
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../epoller.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../event_loop.cpp
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../event_loop.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../ip_address.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../poller.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../sapper.h
-CMakeFiles/eventloop.dir/event_loop.cpp.o: ../socket_util.h
-
 CMakeFiles/eventloop.dir/ip_address.cpp.o: ../ip_address.cpp
 CMakeFiles/eventloop.dir/ip_address.cpp.o: ../ip_address.h
 
+CMakeFiles/eventloop.dir/sapper.cpp.o: /home/linxing/Desktop/gameserver/b1/net/common.h
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../base/date_time.h
+CMakeFiles/eventloop.dir/sapper.cpp.o: ../base/fair_memory_pool.h
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../base/mutex.hpp
+CMakeFiles/eventloop.dir/sapper.cpp.o: ../base/timer_mgr.h
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../epoller.h
-CMakeFiles/eventloop.dir/sapper.cpp.o: ../event_loop.h
+CMakeFiles/eventloop.dir/sapper.cpp.o: ../ip_address.h
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../poller.h
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../sapper.cpp
 CMakeFiles/eventloop.dir/sapper.cpp.o: ../sapper.h
+CMakeFiles/eventloop.dir/sapper.cpp.o: ../socket.h
+CMakeFiles/eventloop.dir/sapper.cpp.o: ../timer_event_loop.h
 
 CMakeFiles/eventloop.dir/socket.cpp.o: ../ip_address.h
 CMakeFiles/eventloop.dir/socket.cpp.o: ../socket.cpp
@@ -45,16 +43,34 @@ CMakeFiles/eventloop.dir/socket_util.cpp.o: ../ip_address.h
 CMakeFiles/eventloop.dir/socket_util.cpp.o: ../socket_util.cpp
 CMakeFiles/eventloop.dir/socket_util.cpp.o: ../socket_util.h
 
+CMakeFiles/eventloop.dir/test_eventloop.cpp.o: /home/linxing/Desktop/gameserver/b1/net/common.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../base/date_time.h
+CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../base/fair_memory_pool.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../base/mutex.hpp
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../base/thread.h
+CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../base/timer_mgr.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../common.hpp
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../epoller.h
-CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../event_loop.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../ip_address.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../poller.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../sapper.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../socket.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../socket_util.h
 CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../test_eventloop.cpp
+CMakeFiles/eventloop.dir/test_eventloop.cpp.o: ../timer_event_loop.h
+
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: /home/linxing/Desktop/gameserver/b1/net/common.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../base/date_time.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../base/fair_memory_pool.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../base/mutex.hpp
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../base/timer_mgr.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../common.hpp
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../epoller.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../ip_address.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../poller.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../sapper.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../socket.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../socket_util.h
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../timer_event_loop.cpp
+CMakeFiles/eventloop.dir/timer_event_loop.cpp.o: ../timer_event_loop.h
 

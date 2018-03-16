@@ -1,12 +1,14 @@
 #include "sapper.h"
-#include "event_loop.h"
+#include "timer_event_loop.h"
 #include <sys/poll.h>
+
+namespace Elixir{
 
 const int Sapper::_none_event = 0;
 const int Sapper::_read_event = POLLIN | POLLPRI;
 const int Sapper::_write_event = POLLOUT;
 
-Sapper::Sapper(int sockfd, EventLoopPtr loop)
+Sapper::Sapper(int sockfd, TimerEventLoopPtr loop)
 	:_fd(sockfd),
 	_in_events(0),
 	_out_events(0),
@@ -50,4 +52,6 @@ void Sapper::update()
 	{
 		_loop->updateSapper(shared_from_this());
 	}
+}
+
 }

@@ -13,16 +13,17 @@
 #include <boost/bind.hpp>
 #include "../common.h"
 #include "base/timer_mgr.h"
+#include "socket.h"
 
 namespace Elixir{
 
-class TimerEventLoop : public noncopyable
+class TimerEventLoop : public boost::noncopyable, public boost::enable_shared_from_this<TimerEventLoop>
 {
 public:
 	TimerEventLoop(const Socket& serverSocket);
-	virtual void handle_accept();
-	virtual void handle_receive(SapperPtr handle);
-	virtual void handle_write(SapperPtr handle);
+	virtual int handle_accept();
+	virtual int handle_receive(SapperPtr handle);
+	virtual int handle_write(SapperPtr handle);
 	
 	void wakeUp();
 	void updateSapper(SapperPtr);
@@ -36,7 +37,7 @@ public:
 protected:
 	void init();//Add event fd for wake up.
 protected:
-	Socket _svr_socket;
+	Socket _socket;
 	SapperList _activeSapper;
 	bool _quit;
 	bool _looping;
@@ -47,7 +48,6 @@ protected:
 private:
 	int _wakeup_fd;
 	uint64_t _wakeup_read;
-	SapperList _activeSapper;
 	bool _is_init;
 };
 

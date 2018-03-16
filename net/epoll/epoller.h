@@ -4,6 +4,8 @@
 #include "poller.h"
 #include <sys/epoll.h>
 
+namespace Elixir{
+
 class EPoller : public Poller
 {	
 typedef std::map<int, SapperPtr> SapperPtrMap;
@@ -22,5 +24,7 @@ private:
 	static int _eventSize;
 }
 ;
+
+}
 
 #endif

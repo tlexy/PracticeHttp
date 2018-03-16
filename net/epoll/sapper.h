@@ -7,10 +7,12 @@
 #include <boost/function.hpp>
 #include "base/date_time.h"
 
-class EventLoop;
+namespace Elixir{
+
+class TimerEventLoop;
 class Sapper;
 
-typedef boost::shared_ptr<EventLoop> EventLoopPtr;
+typedef boost::shared_ptr<TimerEventLoop> TimerEventLoopPtr;
 //typedef boost::shared_ptr<Sapper> SapperPtr;
 
 namespace SAPPER
@@ -27,7 +29,7 @@ class Sapper
 {
 public:
 	typedef boost::function<int()> CallBackHandler;
-	Sapper(int sockfd, EventLoopPtr);
+	Sapper(int sockfd, TimerEventLoopPtr);
 	int focusEvents() { return _in_events; }
 	int revents() { return _out_events; }
 	void focusRead();
@@ -37,12 +39,12 @@ public:
 	void setWriteHandler(const CallBackHandler& cb) { _writeCallback = cb; }
 	int handleEvent(const TimeEpoch&);
 	int fd() { return _fd; }
-	EventLoopPtr loopPtr() { return _loop; }
+	TimerEventLoopPtr loopPtr() { return _loop; }
 private:
 	int _in_events;
 	int _out_events;
 	int _fd;
-	EventLoopPtr _loop;
+	TimerEventLoopPtr _loop;
 	CallBackHandler _readCallback;
 	CallBackHandler _writeCallback;
 	static const int _read_event;
@@ -52,6 +54,6 @@ private:
 	void update();
 };
 
-
+}
 
 #endif

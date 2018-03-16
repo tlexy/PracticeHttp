@@ -7,6 +7,8 @@
 #include <boost/shared_ptr.hpp>
 #include "base/date_time.h"
 
+namespace Elixir{
+
 class Sapper;
 class Poller;
 
@@ -23,5 +25,7 @@ public:
 	virtual void removeSapper(SapperPtr){}
 	virtual ~Poller(){}
 };
+
+}
 
 #endif

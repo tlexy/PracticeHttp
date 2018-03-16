@@ -94,9 +94,9 @@ namespace Elixir{
 		_mem_pool_ptr->recycle((void*)list);
 	}
 
-	void TimerMgr::exec_timer(TYPE::uint64 now)
+	void TimerMgr::exec_timer(uint64_t now)
 	{
-		std::map<int64_t, TimerList*>::iterator it = _timers.begin();
+		std::map<uint64_t, TimerList*>::iterator it = _timers.begin();
 		for (; it != _timers.end();)
 		{
 			if (it->first > now)
@@ -164,12 +164,12 @@ namespace Elixir{
 		_tick_time = tick_time;
 	}
 
-	TYPE::uint64 TimerIdentity::get_id()
+	int64_t TimerIdentity::get_id()
 	{
 		return _id;
 	}
 
-	TYPE::uint64 TimerIdentity::get_tick_time()
+	uint64_t TimerIdentity::get_tick_time()
 	{
 		return _tick_time;
 	}

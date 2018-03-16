@@ -1,11 +1,14 @@
+#ifndef SOCKET_H
+#define SOCKET_H
+
 #include "ip_address.h"
-#include <boost/noncopyable.hpp>
+//#include <boost/noncopyable.hpp>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
 #define CREATE_NEW -1
 
-class Socket : boost::noncopyable
+class Socket// : boost::noncopyable
 {
 public:
 	Socket(int sock = CREATE_NEW, bool nonblock = true);
@@ -25,3 +28,5 @@ private:
 	IpAddress _addr;
 	bool _flag;//nonblock flag;
 };
+
+#endif

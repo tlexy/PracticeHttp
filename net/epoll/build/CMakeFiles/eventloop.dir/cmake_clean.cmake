@@ -1,6 +1,8 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/eventloop.dir/test_eventloop.cpp.o"
-  "CMakeFiles/eventloop.dir/event_loop.cpp.o"
+  "CMakeFiles/eventloop.dir/base/fair_memory_pool.cpp.o"
+  "CMakeFiles/eventloop.dir/base/timer_mgr.cpp.o"
+  "CMakeFiles/eventloop.dir/timer_event_loop.cpp.o"
   "CMakeFiles/eventloop.dir/sapper.cpp.o"
   "CMakeFiles/eventloop.dir/socket.cpp.o"
   "CMakeFiles/eventloop.dir/socket_util.cpp.o"

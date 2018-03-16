@@ -1,16 +1,19 @@
 #include "base/thread.h"
 #include <boost/bind.hpp>
-#include "event_loop.h"
 #include "sapper.h"
 #include "socket_util.h"
 #include "socket.h"
 #include "common.hpp"
 #include <string.h>
 #include <iostream>
+#include "timer_event_loop.h"
 
 Socket sock(-1);
+//EventLoopPtr event_loop = Creator<EventLoop>::Create();
 
-EventLoopPtr event_loop = Creator<EventLoop>::Create();
+using namespace Elixir;
+
+typedef boost::shared_ptr<TimerEventLoop> TimerEventLoopPtr;
 
 void read_data()
 {
@@ -22,7 +25,7 @@ void read_data()
 
 void write_data()
 {}
-
+/*
 void read()
 {
 	IpAddress ipaddr;
@@ -37,6 +40,7 @@ void read()
 	sapper->setWriteHandler(cbw);
 	std::cout << "connect from:" << ipaddr.toString() << std::endl;
 }
+*/
 
 void loop()
 {
@@ -46,12 +50,14 @@ void loop()
 	sock.setReuseAddr(true);
 	sock.bindAddress(ipaddr);
 	sock.listen(10);
-	SapperPtr sapper = Creator<Sapper>::Create(sock.fd(), event_loop);
-	sapper->focusRead();
-	Sapper::CallBackHandler cb = boost::bind(read);
-	sapper->setReadHandler(cb);
-	event_loop->init();
-	event_loop->loop();
+//	SapperPtr sapper = Creator<Sapper>::Create(sock.fd(), event_loop);
+//	sapper->focusRead();
+//	Sapper::CallBackHandler cb = boost::bind(read);
+//	sapper->setReadHandler(cb);
+//	event_loop->init();
+//	event_loop->loop();
+	TimerEventLoopPtr loop = TimerEventLoopPtr(new TimerEventLoop(sock));
+	loop->loop();
 }
 
 int main()
