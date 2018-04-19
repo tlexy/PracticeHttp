@@ -1,6 +1,7 @@
 #include "epoller.h"
 #include <sys/eventfd.h>
 #include "sapper.h"
+#include <iostream>
 
 namespace Elixir{
 
@@ -55,11 +56,6 @@ TimeEpoch EPoller::poll(int timeout, SapperList& activeSapper)
 		_eventSize *= 2;
 		_events.resize(_eventSize);
 	}
-	//if (n == 1 && _events[0].data.fd == _wakeup_fd)
-	//{
-	//	//???
-	//}
-	//fill active sappers.
 	for (int i = 0; i < n; ++i)
 	{
 		SapperPtrMap::iterator it = _sappers.find(_events[i].data.fd);

@@ -36,11 +36,11 @@ int TimerEventLoop::handle_accept()
 	int connfd = _socket.accept(ipaddr);
 	SapperPtr sapper = Creator<Sapper>::Create(connfd, shared_from_this());
 	sapper->focusRead();
-	sapper->focusWrite();
+//	sapper->focusWrite();
 	Sapper::CallBackHandler cbr = boost::bind(&TimerEventLoop::handle_receive, this, sapper);
-	Sapper::CallBackHandler cbw = boost::bind(&TimerEventLoop::handle_write, this, sapper);
+//	Sapper::CallBackHandler cbw = boost::bind(&TimerEventLoop::handle_write, this, sapper);
 	sapper->setReadHandler(cbr);
-	sapper->setWriteHandler(cbw);
+//	sapper->setWriteHandler(cbw);
 	return 0;
 }
 
@@ -117,7 +117,7 @@ void TimerEventLoop::loop()
 		{
 			if (to > now && to - now >= 10)
 			{
-				_timeout = to - now;
+				_timeout = to > now + 10 ? to : now + 10;
 			}
 			else
 			{
